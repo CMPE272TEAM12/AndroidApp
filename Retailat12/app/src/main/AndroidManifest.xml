@@ -22,6 +22,10 @@
         <activity
             android:name="com.vipulkanade.group12.cmpe272.view.RetailAt12AddToInventoryActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name="com.vipulkanade.group12.cmpe272.view.EmployeeInStoreActivity"
+            android:label="@string/title_activity_employee_in_store" >
+        </activity>
     </application>
 
 </manifest>

@@ -220,6 +220,13 @@ public class RetailAt12BaseActivity extends ActionBarActivity {
                 }
                 break;
 
+            case 2:		// Employee in store
+                if (!(mActivity instanceof EmployeeInStoreActivity)) {
+                    Intent oEmployeeInStoreActivity = new Intent(mActivity, EmployeeInStoreActivity.class);
+                    startActivity(oEmployeeInStoreActivity);
+                    finish();
+                }
+                break;
             default:
                 break;
         }

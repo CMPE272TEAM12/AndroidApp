@@ -17,4 +17,5 @@
     <string name="unable_to_connect">Oops! Connection is lost. Please try again.</string>
     <string name="network_unavailable">Please check your network connection and try again.</string>
     <string name="title_activity_floating_button">FloatingButtonActivity</string>
+    <string name="title_activity_employee_in_store">EmployeeInStoreActivity</string>
 </resources>

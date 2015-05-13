@@ -11,4 +11,9 @@ public interface Constants {
     String ERROR_LIST		= "ErrorList";
 
     String RETAIL_AT_12     = "For Retail At 12";
+
+    String RESULTS_DATA     = "resultsData";
+
+    String EMPLOYEE_NAME    = "employeename";
+    String EMPLOYEE_ID      = "employeeid";
 }
