@@ -208,11 +208,11 @@ public class RetailAt12BaseActivity extends ActionBarActivity {
     private void handleMenuClick(int position) {
         switch(position) {
             case 0:		// buy items
-                if (!(mActivity instanceof RetailAt12MainActivity)) {
+               /* if (!(mActivity instanceof RetailAt12MainActivity)) {
                     Intent oRetailAt12MainActivity = new Intent(mActivity, RetailAt12MainActivity.class);
                     startActivity(oRetailAt12MainActivity);
                     finish();
-                }
+                }*/
                 break;
 
             case 1:		// Add items to Inventory

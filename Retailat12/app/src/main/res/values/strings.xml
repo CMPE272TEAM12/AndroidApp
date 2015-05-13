@@ -19,4 +19,6 @@
     <string name="network_unavailable">Please check your network connection and try again.</string>
     <string name="title_activity_employee_in_store">Employee In Store</string>
     <string name="title_activity_graph_view">Analysis</string>
+    <string name="title_activity_login_in_to_retail_at12">Login</string>
+    <string name="title_activity_retail_at12_landing">Retail At 12</string>
 </resources>

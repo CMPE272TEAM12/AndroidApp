@@ -16,4 +16,5 @@ public interface Constants {
 
     String EMPLOYEE_NAME    = "employeename";
     String EMPLOYEE_ID      = "employeeid";
+    String EMPLOYEE_CODE    = "employeecode";
 }

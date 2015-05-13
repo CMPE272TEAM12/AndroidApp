@@ -8,10 +8,6 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendPosition;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.PercentFormatter;
 import com.vipulkanade.group12.cmpe272.retailat12.R;
 
 import java.util.ArrayList;
@@ -80,15 +76,15 @@ public class GraphViewActivity extends RetailAt12BaseActivity {
         for (int i = 0; i < count + 1; i++)
           //  xVals.add(((Math.random() * mult) + mult / 5), i);
 
-        PieDataSet dataSet = new PieDataSet(yVals1, "Iteams Sold");
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(5f);
+        //PieDataSet dataSet = new PieDataSet(yVals1, "Iteams Sold");
+       // dataSet.setSliceSpace(3f);
+       // dataSet.setSelectionShift(5f);
 
         // add a lot of colors
 
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+        //ArrayList<Integer> colors = new ArrayList<Integer>();
 
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+       /* for (int c : ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
 
         for (int c : ColorTemplate.JOYFUL_COLORS)
@@ -111,7 +107,7 @@ public class GraphViewActivity extends RetailAt12BaseActivity {
         data.setValueFormatter(new PercentFormatter());
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.WHITE);
-        mChart.setData(data);
+        mChart.setData(data);*/
 
         // undo all highlights
         mChart.highlightValues(null);

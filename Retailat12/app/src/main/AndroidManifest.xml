@@ -7,17 +7,12 @@
     <application
         android:name="com.vipulkanade.group12.cmpe272.view.RetailAt12Application"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_logo"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.AppCompat" >
         <activity
             android:name="com.vipulkanade.group12.cmpe272.view.RetailAt12MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.vipulkanade.group12.cmpe272.view.RetailAt12AddToInventoryActivity"
@@ -29,6 +24,21 @@
         <activity
             android:name="com.vipulkanade.group12.cmpe272.view.GraphViewActivity"
             android:label="@string/title_activity_graph_view" >
+        </activity>
+        <activity
+            android:name="com.vipulkanade.group12.cmpe272.view.LoginInToRetailAt12Activity"
+            android:label="@string/title_activity_login_in_to_retail_at12"
+            android:theme="@style/Theme.AppCompat" >
+
+        </activity>
+        <activity
+            android:name="com.vipulkanade.group12.cmpe272.view.RetailAt12LandingActivity"
+            android:label="@string/title_activity_retail_at12_landing" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -11,4 +11,5 @@ public interface WebserviceURL {
     String BUY_PRODUCT              = BASE_URL + "soldproduct";
     String GET_PRODUCT              = BASE_URL + "getproduct";
     String GET_EMPLOYEE             = BASE_URL + "getemployee";
+    String EMPLOYEE_LOGIN           = BASE_URL + "login";
 }

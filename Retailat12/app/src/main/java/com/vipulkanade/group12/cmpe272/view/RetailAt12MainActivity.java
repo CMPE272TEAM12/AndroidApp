@@ -3,6 +3,7 @@ package com.vipulkanade.group12.cmpe272.view;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 import de.timroes.android.listview.EnhancedListView;
 
 
-public class RetailAt12MainActivity extends RetailAt12BaseActivity implements View.OnClickListener {
+public class RetailAt12MainActivity extends ActionBarActivity implements View.OnClickListener {
 
     private ArrayList<Object> addedItemsList;
 
@@ -105,23 +106,23 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
         if (scanResult != null) {
             String re = scanResult.getContents();
             String lines[] = re.split("\\r?\\n");
-            if (lines[0].toLowerCase().contains(Constants.RETAIL_AT_12.toLowerCase())) {
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("Item", lines[1].replace("Item Name : ", ""));
-                    jsonObject.put("Code", lines[2].replace("Code : ", ""));
-                    jsonObject.put("Price", lines[3].replaceAll("[\\D]", ""));
-                    addedItemsJSONArray.put(jsonObject);
-                    Log.d("JSON", addedItemsJSONArray.toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
             if (re != null) {
-                addedItemsList.add(0, re);
+                if (lines[0].toLowerCase().contains(Constants.RETAIL_AT_12.toLowerCase())) {
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("Item", lines[1].replace("Item Name : ", ""));
+                        jsonObject.put("Code", lines[2].replace("Code : ", ""));
+                        jsonObject.put("Price", lines[3].replaceAll("[\\D]", ""));
+                        addedItemsJSONArray.put(jsonObject);
 
-                addedItemArrayAdapter.notifyDataSetChanged();
+                        addedItemsList.add(0, re);
+
+                        addedItemArrayAdapter.notifyDataSetChanged();
+                        Log.d("JSON", addedItemsJSONArray.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
         }

@@ -57,4 +57,6 @@ dependencies {
     compile 'de.timroes.android:EnhancedListView:0.3.4'
 
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
+
+    compile 'info.hoang8f:fbutton:1.0.5'
 }
