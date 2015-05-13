@@ -16,7 +16,7 @@ import com.vipulkanade.group12.cmpe272.retailat12.R;
 public class SliderMenuListAdapter extends BaseAdapter {
     private Context mContext;
     public static final int iSliderMenuItems[] = {R.string.buy_item, R.string.add_item, R.string.employee_details};
-    private static final int iSliderMenuIcons[] = {R.drawable.icon_buy_now, R.drawable.icon_add_to_inventory};
+    private static final int iSliderMenuIcons[] = {R.drawable.icon_buy_now, R.drawable.icon_add_to_inventory, R.drawable.icon_employee};
     private static SliderMenuListAdapter mInstance;
     private static final Object obj = new Object();
 
@@ -42,17 +42,13 @@ public class SliderMenuListAdapter extends BaseAdapter {
         TextView oSliderMenuText = (TextView) convertView.findViewById(R.id.slider_menu_text);
         oSliderMenuText.setText(mContext.getString(iSliderMenuItems[position]));
 
-        if(position < iSliderMenuItems.length - 1) {
-            oSliderMenuText.setTextColor(mContext.getResources().getColor(R.color.green_color));
-            ImageView oSliderMenuIcon = (ImageView) convertView.findViewById(R.id.slider_menu_icon);
-            oSliderMenuIcon.setBackgroundResource(iSliderMenuIcons[position]);
-            oSliderMenuIcon.setVisibility(View.VISIBLE);
 
-        } else {
+        oSliderMenuText.setTextColor(mContext.getResources().getColor(R.color.green_color));
+        ImageView oSliderMenuIcon = (ImageView) convertView.findViewById(R.id.slider_menu_icon);
+        oSliderMenuIcon.setBackgroundResource(iSliderMenuIcons[position]);
+        oSliderMenuIcon.setVisibility(View.VISIBLE);
 
-            oSliderMenuText.setTextColor(mContext.getResources().getColor(android.R.color.white));
 
-        }
         return convertView;
     }
 

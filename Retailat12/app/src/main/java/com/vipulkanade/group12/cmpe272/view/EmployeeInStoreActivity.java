@@ -3,6 +3,7 @@ package com.vipulkanade.group12.cmpe272.view;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -18,11 +19,17 @@ import com.vipulkanade.group12.cmpe272.webservices.WebserviceURL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class EmployeeInStoreActivity extends RetailAt12BaseActivity {
 
     private static final String TAG = EmployeeInStoreActivity.class.getSimpleName();
 
     private RetailAt12BaseActivity mInstance;
+
+    private ListView mListView;
+
+    private List<EmployeeInStore> mEmployeeInStoresList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,9 @@ public class EmployeeInStoreActivity extends RetailAt12BaseActivity {
     }
 
     private void setupView() {
+
+        mListView = (ListView) findViewById(R.id.employee_in_store_list);
+
         makeRequest();
     }
 
@@ -56,6 +66,7 @@ public class EmployeeInStoreActivity extends RetailAt12BaseActivity {
                     EmployeeInStore oEmployeeInStore = new EmployeeInStore(oResponse.optJSONObject(i));
                     DataModelManager.getInstance().getEmployeeInStoreList().add(oEmployeeInStore);
                 }
+                setDisplay();
             }
         }, new Response.ErrorListener() {
 
@@ -69,13 +80,21 @@ public class EmployeeInStoreActivity extends RetailAt12BaseActivity {
         mInstance.addToRequestQueue(jsObjRequest);
     }
 
+    private void setDisplay() {
+        mEmployeeInStoresList = DataModelManager.getInstance().getEmployeeInStoreList();
+
+        if (mEmployeeInStoresList != null && mEmployeeInStoresList.size() > 0) {
+            mListView.setAdapter(new ListAdapter(this, mEmployeeInStoresList));
+        }
+    }
+
     private void showProgressBar() {
         findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-        findViewById(R.id.employee_in_store_list).setVisibility(View.GONE);
+        mListView.setVisibility(View.GONE);
     }
 
     private void hideProgressBar() {
         findViewById(R.id.progressBar).setVisibility(View.GONE);
-        findViewById(R.id.employee_in_store_list).setVisibility(View.VISIBLE);
+        mListView.setVisibility(View.VISIBLE);
     }
 }

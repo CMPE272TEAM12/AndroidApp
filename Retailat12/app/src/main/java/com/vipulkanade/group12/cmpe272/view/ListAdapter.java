@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vipulkanade.group12.cmpe272.constants.Constants;
+import com.vipulkanade.group12.cmpe272.model.EmployeeInStore;
 import com.vipulkanade.group12.cmpe272.retailat12.R;
 
 import java.util.List;
@@ -39,6 +40,8 @@ public class ListAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        Object obj = mListItems.get(position);
+
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(iLayoutResId, null);
@@ -46,7 +49,13 @@ public class ListAdapter extends ArrayAdapter {
         }
 
         mTextView = (TextView) convertView.findViewById(R.id.list_item_text);
-        mTextView.setText(mListItems.get(position).toString().replace(Constants.RETAIL_AT_12, "Item Scanned"));
+        if (obj instanceof RetailAt12MainActivity || obj instanceof RetailAt12AddToInventoryActivity) {
+            mTextView.setText(mListItems.get(position).toString().replace(Constants.RETAIL_AT_12, "Item Scanned"));
+        } else if (obj instanceof EmployeeInStore) {
+            EmployeeInStore oEmployeeInStore = (EmployeeInStore) obj;
+            mTextView.setText(oEmployeeInStore.getEmployeeName());
+        }
+
 
         return convertView;
     }
