@@ -108,7 +108,7 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
             if (lines[0].toLowerCase().contains(Constants.RETAIL_AT_12.toLowerCase())) {
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put("Item", lines[1].replace("Item : ",""));
+                    jsonObject.put("Item", lines[1].replace("Item Name : ", ""));
                     jsonObject.put("Code", lines[2].replace("Code : ", ""));
                     jsonObject.put("Price", lines[3].replaceAll("[\\D]", ""));
                     addedItemsJSONArray.put(jsonObject);
@@ -129,6 +129,7 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
 
 
     private void postRequest() {
+        showpDialog();
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("itemList", addedItemsJSONArray.toString());
@@ -138,6 +139,7 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            hidepDialog();
                             VolleyLog.v("Response:%n %s", response.toString(4));
                             Toast.makeText(getApplicationContext(), "Thank you for Shopping with us", Toast.LENGTH_SHORT).show();
                             addedItemsList.clear();
@@ -149,7 +151,9 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                hidepDialog();
                 VolleyLog.e("Error: ", error.getMessage());
+                Toast.makeText(getApplicationContext(), "There was error during transaction, Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
 

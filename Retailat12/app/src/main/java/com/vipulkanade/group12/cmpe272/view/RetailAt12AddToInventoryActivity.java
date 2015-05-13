@@ -112,10 +112,10 @@ public class RetailAt12AddToInventoryActivity extends RetailAt12BaseActivity imp
             if (lines[0].toLowerCase().contains(Constants.RETAIL_AT_12.toLowerCase())) {
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put("Item", lines[1].replace("Item : ",""));
+                    jsonObject.put("Item", lines[1].replace("Item Name : ",""));
                     jsonObject.put("Code", lines[2].replace("Code : ", ""));
                     jsonObject.put("Price", lines[3].replaceAll("[\\D]", ""));
-                    jsonObject.put("Quantity", lines[4].replace("Quantity : ", ""));
+                    jsonObject.put("Quantity", Integer.parseInt(lines[4].replace("Quantity : ", "")));
                     addedItemsJSONArray.put(jsonObject);
                     Log.d("JSON", addedItemsJSONArray.toString());
                 } catch (JSONException e) {
@@ -134,6 +134,7 @@ public class RetailAt12AddToInventoryActivity extends RetailAt12BaseActivity imp
 
 
     private void postRequest() {
+        showpDialog();
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("itemList", addedItemsJSONArray.toString());
@@ -143,6 +144,7 @@ public class RetailAt12AddToInventoryActivity extends RetailAt12BaseActivity imp
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            hidepDialog();
                             VolleyLog.v("Response:%n %s", response.toString(4));
                             Toast.makeText(getApplicationContext(), "Thank you for Shopping with us", Toast.LENGTH_SHORT).show();
                             addedItemsList.clear();
@@ -154,11 +156,13 @@ public class RetailAt12AddToInventoryActivity extends RetailAt12BaseActivity imp
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                hidepDialog();
                 VolleyLog.e("Error: ", error.getMessage());
+                Toast.makeText(getApplicationContext(), "There was error during transaction, Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
 
-// add the request object to the queue to be executed
+    // add the request object to the queue to be executed
         mInstance.addToRequestQueue(req);
     }
 
