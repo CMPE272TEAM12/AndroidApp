@@ -26,6 +26,10 @@
             android:name="com.vipulkanade.group12.cmpe272.view.EmployeeInStoreActivity"
             android:label="@string/title_activity_employee_in_store" >
         </activity>
+        <activity
+            android:name="com.vipulkanade.group12.cmpe272.view.GraphViewActivity"
+            android:label="@string/title_activity_graph_view" >
+        </activity>
     </application>
 
 </manifest>

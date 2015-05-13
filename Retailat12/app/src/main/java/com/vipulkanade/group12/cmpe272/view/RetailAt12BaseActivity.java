@@ -164,6 +164,9 @@ public class RetailAt12BaseActivity extends ActionBarActivity {
                 case R.id.employee_details:
                     iPosition = 2;
                     break;
+                case R.id.analysis:
+                    iPosition = 3;
+                    break;
             }
             handleMenuClick(iPosition);
         }
@@ -224,6 +227,13 @@ public class RetailAt12BaseActivity extends ActionBarActivity {
                 if (!(mActivity instanceof EmployeeInStoreActivity)) {
                     Intent oEmployeeInStoreActivity = new Intent(mActivity, EmployeeInStoreActivity.class);
                     startActivity(oEmployeeInStoreActivity);
+                    finish();
+                }
+                break;
+            case 3:		// Employee in store
+                if (!(mActivity instanceof GraphViewActivity)) {
+                    Intent oGraphViewActivity = new Intent(mActivity, GraphViewActivity.class);
+                    startActivity(oGraphViewActivity);
                     finish();
                 }
                 break;

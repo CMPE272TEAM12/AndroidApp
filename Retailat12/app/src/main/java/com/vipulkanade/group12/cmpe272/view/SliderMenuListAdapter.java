@@ -15,8 +15,8 @@ import com.vipulkanade.group12.cmpe272.retailat12.R;
  */
 public class SliderMenuListAdapter extends BaseAdapter {
     private Context mContext;
-    public static final int iSliderMenuItems[] = {R.string.buy_item, R.string.add_item, R.string.employee_details};
-    private static final int iSliderMenuIcons[] = {R.drawable.icon_buy_now, R.drawable.icon_add_to_inventory, R.drawable.icon_employee};
+    public static final int iSliderMenuItems[] = {R.string.buy_item, R.string.add_item, R.string.employee_details, R.string.analysis};
+    private static final int iSliderMenuIcons[] = {R.drawable.icon_buy_now, R.drawable.icon_add_to_inventory, R.drawable.icon_employee, R.drawable.icon_graph_analysis};
     private static SliderMenuListAdapter mInstance;
     private static final Object obj = new Object();
 

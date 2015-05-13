@@ -8,6 +8,7 @@
     <string name="add_item">Add Item to Inventory</string>
     <string name="employee_details">Employee In Store</string>
     <string name="buy_item">Buy Item</string>
+    <string name="analysis">Analysis</string>
 
     <string name="drawer_open"></string>
     <string name="drawer_close"></string>
@@ -17,4 +18,5 @@
     <string name="unable_to_connect">Oops! Connection is lost. Please try again.</string>
     <string name="network_unavailable">Please check your network connection and try again.</string>
     <string name="title_activity_employee_in_store">Employee In Store</string>
+    <string name="title_activity_graph_view">Analysis</string>
 </resources>
