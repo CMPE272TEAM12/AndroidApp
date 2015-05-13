@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -16,28 +15,19 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.vipulkanade.group12.cmpe272.retailat12.R;
+import com.vipulkanade.group12.cmpe272.webservices.WebserviceURL;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.timroes.android.listview.EnhancedListView;
 
 
 public class RetailAt12MainActivity extends RetailAt12BaseActivity implements View.OnClickListener {
-
-    private enum ControlGroup {
-        SWIPE_TO_DISMISS
-    }
-
-    private static final String PREF_UNDO_STYLE = "de.timroes.android.listviewdemo.UNDO_STYLE";
-    private static final String PREF_SWIPE_TO_DISMISS = "de.timroes.android.listviewdemo.SWIPE_TO_DISMISS";
-    private static final String PREF_SWIPE_DIRECTION = "de.timroes.android.listviewdemo.SWIPE_DIRECTION";
-    private static final String PREF_SWIPE_LAYOUT = "de.timroes.android.listviewdemo.SWIPE_LAYOUT";
-
-    // json object response url
-    private String urlJsonObj = "http://abe393ba.ngrok.io/getproduct";
 
     private ArrayList<Object> addedItemsList;
 
@@ -45,18 +35,13 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
 
     private RetailAt12BaseActivity mInstance;
 
-    float historicX = Float.NaN, historicY = Float.NaN;
-    static final int DELTA = 50;
-    enum Direction {LEFT, RIGHT;}
+    private JSONArray addedItemsJSONArray = new JSONArray();
 
     // Progress dialog
     private ProgressDialog pDialog;
     private EnhancedListView addedItemListView;
     private FloatingActionButton scanItemToAddButton;
     private FloatingActionButton checkoutButton;
-
-    // temporary string to show the parsed response
-    private String jsonResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +75,6 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
         addedItemArrayAdapter = new ListAdapter(this, addedItemsList);
         addedItemListView.setAdapter(addedItemArrayAdapter);
 
-        enableControlGroup(ControlGroup.SWIPE_TO_DISMISS, getPreferences(MODE_PRIVATE).getBoolean(PREF_SWIPE_TO_DISMISS, false));
-
 
         addedItemListView.setDismissCallback(new EnhancedListView.OnDismissCallback() {
             @Override
@@ -120,6 +103,19 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
             String re = scanResult.getContents();
+            String lines[] = re.split("\\r?\\n");
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("Item", lines[0].replace("Item : ",""));
+                jsonObject.put("Code", lines[1].replace("Code : ", ""));
+                jsonObject.put("Price", lines[2].replaceAll("[\\D]", ""));
+                addedItemsJSONArray.put(jsonObject);
+                Log.d("JSON", addedItemsJSONArray.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             if (re != null) {
                 addedItemsList.add(0, re);
 
@@ -129,50 +125,31 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
         }
     }
 
-    /**
-     * Method to make json object request where json response starts wtih {
-     * */
-    private void makeJsonObjectRequest() {
-        showpDialog();
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET,
-                urlJsonObj, new Response.Listener<JSONObject>() {
+    private void postRequest() {
+        // Post params to be sent to the server
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("itemList", addedItemsJSONArray.toString());
 
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
-
-                try {
-                    // Parsing json object response
-                    // response will be a json object
-                    String name = response.getString("resultsData");
-
-
-                    jsonResponse = "";
-                    jsonResponse += "Name: " + name + "\n\n";
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),
-                            "Error: " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();
-                }
-                hidepDialog();
-            }
-        }, new Response.ErrorListener() {
-
+        JsonObjectRequest req = new JsonObjectRequest(WebserviceURL.BUY_PRODUCT, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            VolleyLog.v("Response:%n %s", response.toString(4));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
-                // hide the progress dialog
-                hidepDialog();
+                VolleyLog.e("Error: ", error.getMessage());
             }
         });
 
-        // Adding request to request queue
-        mInstance.addToRequestQueue(jsonObjReq);
+// add the request object to the queue to be executed
+        mInstance.addToRequestQueue(req);
     }
 
     private void showpDialog() {
@@ -194,19 +171,16 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
                 break;
 
             case R.id.checkout_button:
-                Toast.makeText(this, "CheckOut Clicked", Toast.LENGTH_SHORT).show();
+                Log.d("checkout 1 : ", addedItemsList.isEmpty() + "");
+                Log.d("checkout 2 : ", addedItemsList.size() + "");
+                if (!addedItemsList.isEmpty() && addedItemsList != null && addedItemsList.size() != 0) {
+                   // postRequest();
+                } else {
+                    Toast.makeText(this, "Please add items to cart first", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             default:
-                break;
-        }
-    }
-
-    private void enableControlGroup(ControlGroup group, boolean enabled) {
-        switch(group) {
-            case SWIPE_TO_DISMISS:
-                //findViewById(R.id.pref_swipedirection).setEnabled(enabled);
-                //findViewById(R.id.pref_swipelayout).setEnabled(enabled);
                 break;
         }
     }
