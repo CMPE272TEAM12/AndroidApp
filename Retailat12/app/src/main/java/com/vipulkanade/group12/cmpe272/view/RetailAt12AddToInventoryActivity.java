@@ -27,8 +27,10 @@ import java.util.HashMap;
 
 import de.timroes.android.listview.EnhancedListView;
 
-
-public class RetailAt12MainActivity extends RetailAt12BaseActivity implements View.OnClickListener {
+/**
+ * Created by vipulkanade on 5/12/15.
+ */
+public class RetailAt12AddToInventoryActivity extends RetailAt12BaseActivity implements View.OnClickListener {
 
     private ArrayList<Object> addedItemsList;
 
@@ -57,6 +59,8 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
 
         scanItemToAddButton = (FloatingActionButton) findViewById(R.id.scan_to_add_button);
         checkoutButton = (FloatingActionButton) findViewById(R.id.checkout_button);
+
+        checkoutButton.setTitle("Add items to Inventory");
 
         setupView();
 
@@ -88,7 +92,7 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
                 return new EnhancedListView.Undoable() {
                     @Override
                     public void undo() {
-                         //addedItemArrayAdapter.insert(position);
+                        //addedItemArrayAdapter.insert(position);
                     }
                 };
 
@@ -111,6 +115,7 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
                     jsonObject.put("Item", lines[1].replace("Item : ",""));
                     jsonObject.put("Code", lines[2].replace("Code : ", ""));
                     jsonObject.put("Price", lines[3].replaceAll("[\\D]", ""));
+                    jsonObject.put("Quantity", lines[4].replace("Quantity : ", ""));
                     addedItemsJSONArray.put(jsonObject);
                     Log.d("JSON", addedItemsJSONArray.toString());
                 } catch (JSONException e) {
@@ -133,7 +138,7 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("itemList", addedItemsJSONArray.toString());
 
-        JsonObjectRequest req = new JsonObjectRequest(WebserviceURL.BUY_PRODUCT, new JSONObject(params),
+        JsonObjectRequest req = new JsonObjectRequest(WebserviceURL.ADD_PRODUCT_TO_INVENTORY, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -171,7 +176,7 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.scan_to_add_button:
-                IntentIntegrator integrator = new IntentIntegrator(RetailAt12MainActivity.this);
+                IntentIntegrator integrator = new IntentIntegrator(RetailAt12AddToInventoryActivity.this);
                 integrator.initiateScan();
                 break;
 

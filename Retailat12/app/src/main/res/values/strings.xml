@@ -5,8 +5,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_base">BaseActivity</string>
 
-    <string name="add_item">Add Item</string>
+    <string name="add_item">Add Item to Inventory</string>
     <string name="employee_details">Employee Details</string>
+    <string name="buy_item">Buy Item</string>
 
     <string name="drawer_open"></string>
     <string name="drawer_close"></string>

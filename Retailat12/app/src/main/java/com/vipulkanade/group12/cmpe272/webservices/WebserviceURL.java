@@ -7,6 +7,7 @@ public interface WebserviceURL {
 
     String BASE_URL = "http://52.8.84.224:3232/";
 
+    String ADD_PRODUCT_TO_INVENTORY = BASE_URL + "";
     String BUY_PRODUCT = BASE_URL + "soldproduct";
     String GET_PRODUCT = BASE_URL + "getproduct";
 }

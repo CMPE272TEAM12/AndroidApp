@@ -1,13 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/add_item"
+        android:id="@+id/buy_item"
+
+        android:title="@string/buy_item"/>
+    <item
+        android:id="@+id/add_item_to_inventory"
 
         android:title="@string/add_item"/>
     <item
         android:id="@+id/employee_details"
 
         android:title="@string/employee_details"/>
-
-
 </menu>

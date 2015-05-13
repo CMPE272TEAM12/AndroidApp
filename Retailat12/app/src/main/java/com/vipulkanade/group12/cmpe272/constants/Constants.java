@@ -9,4 +9,6 @@ public interface Constants {
     String STATUS			= "Status";
     String MESSAGE			= "Message";
     String ERROR_LIST		= "ErrorList";
+
+    String RETAIL_AT_12     = "For Retail At 12";
 }

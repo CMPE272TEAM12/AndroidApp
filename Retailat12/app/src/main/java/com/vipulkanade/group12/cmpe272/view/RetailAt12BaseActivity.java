@@ -3,6 +3,7 @@ package com.vipulkanade.group12.cmpe272.view;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -154,11 +155,14 @@ public class RetailAt12BaseActivity extends ActionBarActivity {
 
             int iPosition = 0;
             switch(item.getItemId()) {
-                case R.id.add_item:
+                case R.id.buy_item:
                     iPosition = 0;
                     break;
-                case R.id.employee_details:
+                case R.id.add_item_to_inventory:
                     iPosition = 1;
+                    break;
+                case R.id.employee_details:
+                    iPosition = 2;
                     break;
             }
             handleMenuClick(iPosition);
@@ -200,12 +204,20 @@ public class RetailAt12BaseActivity extends ActionBarActivity {
      */
     private void handleMenuClick(int position) {
         switch(position) {
-            case 0:		// Add
-
+            case 0:		// buy items
+                if (!(mActivity instanceof RetailAt12MainActivity)) {
+                    Intent oRetailAt12MainActivity = new Intent(mActivity, RetailAt12MainActivity.class);
+                    startActivity(oRetailAt12MainActivity);
+                    finish();
+                }
                 break;
 
-            case 1:		// Employee
-
+            case 1:		// Add items to Inventory
+                if (!(mActivity instanceof RetailAt12AddToInventoryActivity)) {
+                    Intent oRetailAt12AddToInventoryActivity = new Intent(mActivity, RetailAt12AddToInventoryActivity.class);
+                    startActivity(oRetailAt12AddToInventoryActivity);
+                    finish();
+                }
                 break;
 
             default:

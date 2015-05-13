@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.vipulkanade.group12.cmpe272.constants.Constants;
 import com.vipulkanade.group12.cmpe272.retailat12.R;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class ListAdapter extends ArrayAdapter {
         }
 
         mTextView = (TextView) convertView.findViewById(R.id.list_item_text);
-        mTextView.setText(mListItems.get(position).toString());
+        mTextView.setText(mListItems.get(position).toString().replace(Constants.RETAIL_AT_12, "Item Scanned"));
 
         return convertView;
     }
