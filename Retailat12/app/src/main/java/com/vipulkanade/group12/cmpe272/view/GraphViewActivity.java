@@ -2,116 +2,139 @@ package com.vipulkanade.group12.cmpe272.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.Legend.LegendPosition;
-import com.github.mikephil.charting.data.Entry;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.vipulkanade.group12.cmpe272.constants.Constants;
+import com.vipulkanade.group12.cmpe272.model.DataModelManager;
+import com.vipulkanade.group12.cmpe272.model.GetProductHistory;
 import com.vipulkanade.group12.cmpe272.retailat12.R;
+import com.vipulkanade.group12.cmpe272.webservices.WebserviceURL;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GraphViewActivity extends RetailAt12BaseActivity {
 
-    private PieChart mChart;
+    private BarChart chart;
+
+    private RetailAt12BaseActivity mInstance;
+
+    private List<GetProductHistory> mListGetProductHistory = new ArrayList<GetProductHistory>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_view);
 
+        mInstance = new RetailAt12BaseActivity();
 
-        mChart = (PieChart) findViewById(R.id.chart1);
-        mChart.setUsePercentValues(true);
-        mChart.setDescription("");
+        chart = (BarChart) findViewById(R.id.chart);
 
-        mChart.setDragDecelerationFrictionCoef(0.95f);
-
-
-//        mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf"));
-
-        mChart.setDrawHoleEnabled(true);
-        mChart.setHoleColorTransparent(true);
-
-        mChart.setTransparentCircleColor(Color.WHITE);
-
-        mChart.setHoleRadius(58f);
-        mChart.setTransparentCircleRadius(61f);
-
-        mChart.setDrawCenterText(true);
-
-        mChart.setRotationAngle(0);
-        // enable rotation of the chart by touch
-        mChart.setRotationEnabled(true);
-
-        mChart.setCenterText("Analysis\nRetail at 12");
-
-        setData(3, 100);
-
-        mChart.animateY(1500, Easing.EasingOption.EaseInOutQuad);
-        // mChart.spin(2000, 0, 360);
-
-        Legend l = mChart.getLegend();
-        l.setPosition(LegendPosition.RIGHT_OF_CHART);
-        l.setXEntrySpace(7f);
-        l.setYEntrySpace(5f);
+        makeRequest();
     }
 
-    private void setData(int count, float range) {
+    private ArrayList<BarDataSet> getDataSet() {
+        ArrayList<BarDataSet> dataSets = null;
+        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
+        ArrayList<BarEntry> valueSet2 = new ArrayList<>();
 
-        float mult = range;
+        if (mListGetProductHistory.size() > 0 && mListGetProductHistory != null) {
 
-        ArrayList yVals1 = new ArrayList();
+            for (int i = 0; i < mListGetProductHistory.size(); i++) {
+                BarEntry v1e = new BarEntry(mListGetProductHistory.get(i).getQuantity(), i);
+                valueSet1.add(v1e);
 
-        // IMPORTANT: In a PieChart, no values (Entry) should have the same
-        // xIndex (even if from different DataSets), since no values can be
-        // drawn above each other.
-        for (int i = 0; i < count + 1; i++) {
-            yVals1.add(new Entry((float) (Math.random() * mult) + mult / 5, i));
+                BarEntry v2e = new BarEntry(mListGetProductHistory.get(i).getSentiment(), i);
+                valueSet2.add(v2e);
+                Log.d(TAG, v1e + "");
+                Log.d(TAG, v2e + "");
+            }
+
+            BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Quantity Sold");
+            barDataSet1.setColor(Color.rgb(0, 155, 0));
+            BarDataSet barDataSet2 = new BarDataSet(valueSet2, "Reviews");
+            barDataSet2.setColors(ColorTemplate.COLORFUL_COLORS);
+
+            dataSets = new ArrayList<>();
+            dataSets.add(barDataSet1);
+            dataSets.add(barDataSet2);
+            return dataSets;
         }
+        return null;
+    }
 
-        ArrayList xVals = new ArrayList();
+    private ArrayList<String> getXAxisValues() {
+        ArrayList<String> xAxis = new ArrayList<>();
 
-        for (int i = 0; i < count + 1; i++)
-          //  xVals.add(((Math.random() * mult) + mult / 5), i);
+        if (mListGetProductHistory.size() > 0 && mListGetProductHistory != null) {
+            for (int i = 0; i < mListGetProductHistory.size(); i++) {
+                xAxis.add(mListGetProductHistory.get(i).getItemName().trim());
+            }
+        }
+        return xAxis;
+    }
 
-        //PieDataSet dataSet = new PieDataSet(yVals1, "Iteams Sold");
-       // dataSet.setSliceSpace(3f);
-       // dataSet.setSelectionShift(5f);
+    private void makeRequest() {
 
-        // add a lot of colors
+        showProgressBar();
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, WebserviceURL.GET_PRODUCT_HISTORY, new Response.Listener<JSONObject>() {
 
-        //ArrayList<Integer> colors = new ArrayList<Integer>();
+            @Override
+            public void onResponse(JSONObject response) {
+                // TODO Auto-generated method stub
+                hideProgressBar();
 
-       /* for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
+                JSONArray oResponse = response.optJSONArray(Constants.RESULTS_DATA);
+                DataModelManager.getInstance().getGetProductHistoryList().clear();
+                for (int i = 0; i < oResponse.length(); i++) {
 
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
+                    GetProductHistory oGetProductHistory = new GetProductHistory(oResponse.optJSONObject(i));
+                    DataModelManager.getInstance().getGetProductHistoryList().add(oGetProductHistory);
+                }
+                setDisplay();
+            }
+        }, new Response.ErrorListener() {
 
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO Auto-generated method stub
+                VolleyLog.e(TAG, error);
+                hideProgressBar();
+            }
+        });
+        mInstance.addToRequestQueue(jsObjRequest);
+    }
 
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
+    private void setDisplay() {
+        mListGetProductHistory = DataModelManager.getInstance().getGetProductHistoryList();
+        BarData data = new BarData(getXAxisValues(), getDataSet());
+        chart.setData(data);
+        chart.setDescription("Last 7 days");
+        chart.animateXY(2000, 2000);
+        chart.invalidate();
+    }
 
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
+    private void showProgressBar() {
+        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+        chart.setVisibility(View.GONE);
+    }
 
-        colors.add(ColorTemplate.getHoloBlue());
-
-        dataSet.setColors(colors);
-
-        PieData data = new PieData(xVals, dataSet);
-        data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
-        mChart.setData(data);*/
-
-        // undo all highlights
-        mChart.highlightValues(null);
-
-        mChart.invalidate();
+    private void hideProgressBar() {
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
+        chart.setVisibility(View.VISIBLE);
     }
 }

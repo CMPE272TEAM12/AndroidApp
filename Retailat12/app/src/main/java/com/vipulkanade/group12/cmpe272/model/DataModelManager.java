@@ -13,6 +13,10 @@ public class DataModelManager {
 
     private List<EmployeeInStore> mEmployeeInStoreList = new ArrayList<EmployeeInStore>();
 
+    private List<GetProductHistory> mGetProductHistoryList = new ArrayList<GetProductHistory>();
+
+    private List<GetProduct> mGetProductList = new ArrayList<GetProduct>();
+
     public DataModelManager() {
     }
 
@@ -24,12 +28,27 @@ public class DataModelManager {
         return mInstance;
     }
 
-
     public List<EmployeeInStore> getEmployeeInStoreList() {
         return mEmployeeInStoreList;
     }
 
     public void setEmployeeInStoreList(List<EmployeeInStore> mEmployeeInStoreList) {
         this.mEmployeeInStoreList = mEmployeeInStoreList;
+    }
+
+    public List<GetProductHistory> getGetProductHistoryList() {
+        return mGetProductHistoryList;
+    }
+
+    public void setGetProductHistoryList(List<GetProductHistory> mGetProductHistoryList) {
+        this.mGetProductHistoryList = mGetProductHistoryList;
+    }
+
+    public List<GetProduct> getGetProductList() {
+        return mGetProductList;
+    }
+
+    public void setGetProductList(List<GetProduct> mGetProductList) {
+        this.mGetProductList = mGetProductList;
     }
 }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -71,7 +72,8 @@ public class LoginInToRetailAt12Activity extends ActionBarActivity implements Vi
                 String lines[] = re.split("\\r?\\n");
 
                 try {
-                    jsonObject.put(Constants.EMPLOYEE_ID, lines[0].replace(Constants.EMPLOYEE_CODE + " : ", ""));
+                    jsonObject.put(Constants.EMPLOYEE_CODE, lines[0].replace(Constants.EMPLOYEE_CODE + " : ", ""));
+                    Log.d("Login Atc", jsonObject.toString());
                     postRequest();
                 } catch (JSONException e) {
                     e.printStackTrace();

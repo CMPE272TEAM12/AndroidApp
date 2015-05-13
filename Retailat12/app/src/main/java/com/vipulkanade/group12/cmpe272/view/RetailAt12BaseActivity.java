@@ -207,15 +207,7 @@ public class RetailAt12BaseActivity extends ActionBarActivity {
      */
     private void handleMenuClick(int position) {
         switch(position) {
-            case 0:		// buy items
-               /* if (!(mActivity instanceof RetailAt12MainActivity)) {
-                    Intent oRetailAt12MainActivity = new Intent(mActivity, RetailAt12MainActivity.class);
-                    startActivity(oRetailAt12MainActivity);
-                    finish();
-                }*/
-                break;
-
-            case 1:		// Add items to Inventory
+            case 0:		// Add items to Inventory
                 if (!(mActivity instanceof RetailAt12AddToInventoryActivity)) {
                     Intent oRetailAt12AddToInventoryActivity = new Intent(mActivity, RetailAt12AddToInventoryActivity.class);
                     startActivity(oRetailAt12AddToInventoryActivity);
@@ -223,20 +215,30 @@ public class RetailAt12BaseActivity extends ActionBarActivity {
                 }
                 break;
 
-            case 2:		// Employee in store
+            case 1:		// Employee in store
                 if (!(mActivity instanceof EmployeeInStoreActivity)) {
                     Intent oEmployeeInStoreActivity = new Intent(mActivity, EmployeeInStoreActivity.class);
                     startActivity(oEmployeeInStoreActivity);
                     finish();
                 }
                 break;
-            case 3:		// Employee in store
+
+            case 2:		// Graph View
                 if (!(mActivity instanceof GraphViewActivity)) {
                     Intent oGraphViewActivity = new Intent(mActivity, GraphViewActivity.class);
                     startActivity(oGraphViewActivity);
                     finish();
                 }
                 break;
+
+            case 3:		// Product list
+                if (!(mActivity instanceof ListProductActivity)) {
+                    Intent oListProductActivity = new Intent(mActivity, ListProductActivity.class);
+                    startActivity(oListProductActivity);
+                    finish();
+                }
+                break;
+
             default:
                 break;
         }

@@ -17,4 +17,15 @@ public interface Constants {
     String EMPLOYEE_NAME    = "employeename";
     String EMPLOYEE_ID      = "employeeid";
     String EMPLOYEE_CODE    = "employeecode";
+
+    String ITEM_NAME        = "itemname";
+    String QUANTITY         = "quantity";
+    String SENTIMENT        = "sentiment";
+
+    String ITEM_ID          = "itemid";
+    String ITEM_QUANTITY    = "itemquantity";
+    String STORE_ID         = "storeid";
+    String ITEM_CODE        = "itemcode";
+    String ITEM_PRICE       = "itemprice";
+
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.vipulkanade.group12.cmpe272.constants.Constants;
 import com.vipulkanade.group12.cmpe272.model.EmployeeInStore;
+import com.vipulkanade.group12.cmpe272.model.GetProduct;
 import com.vipulkanade.group12.cmpe272.retailat12.R;
 
 import java.util.List;
@@ -54,6 +55,10 @@ public class ListAdapter extends ArrayAdapter {
         } else if (obj instanceof EmployeeInStore) {
             EmployeeInStore oEmployeeInStore = (EmployeeInStore) obj;
             mTextView.setText(oEmployeeInStore.getEmployeeName());
+        } else if (obj instanceof GetProduct) {
+            GetProduct getProduct = (GetProduct) obj;
+            String setTextString = "Name : " +getProduct.getItemName()  + "\nPrice : " + getProduct.getItemPrice() + "\nQuantity : " + getProduct.getItemQuantity();
+            mTextView.setText(setTextString);
         }
 
 

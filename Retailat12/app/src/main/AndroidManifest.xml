@@ -29,7 +29,6 @@
             android:name="com.vipulkanade.group12.cmpe272.view.LoginInToRetailAt12Activity"
             android:label="@string/title_activity_login_in_to_retail_at12"
             android:theme="@style/Theme.AppCompat" >
-
         </activity>
         <activity
             android:name="com.vipulkanade.group12.cmpe272.view.RetailAt12LandingActivity"
@@ -39,6 +38,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.vipulkanade.group12.cmpe272.view.ListProductActivity"
+            android:label="@string/title_activity_list_product" >
         </activity>
     </application>
 
