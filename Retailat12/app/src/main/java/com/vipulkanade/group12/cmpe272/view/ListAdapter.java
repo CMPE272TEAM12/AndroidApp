@@ -1,6 +1,7 @@
 package com.vipulkanade.group12.cmpe272.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +51,10 @@ public class ListAdapter extends ArrayAdapter {
         }
 
         mTextView = (TextView) convertView.findViewById(R.id.list_item_text);
+        Log.d("Hello", (obj instanceof RetailAt12AddToInventoryActivity)+"");
         if (obj instanceof RetailAt12MainActivity || obj instanceof RetailAt12AddToInventoryActivity) {
-            mTextView.setText(mListItems.get(position).toString().replace(Constants.RETAIL_AT_12, "Item Scanned"));
+           // Log.d("in here",mListItems.get(position).toString().replace(Constants.RETAIL_AT_12, "Item Scanned"));
+           // mTextView.setText(mListItems.get(position).toString().replace(Constants.RETAIL_AT_12, "Item Scanned"));
         } else if (obj instanceof EmployeeInStore) {
             EmployeeInStore oEmployeeInStore = (EmployeeInStore) obj;
             mTextView.setText(oEmployeeInStore.getEmployeeName());
@@ -59,6 +62,9 @@ public class ListAdapter extends ArrayAdapter {
             GetProduct getProduct = (GetProduct) obj;
             String setTextString = "Name : " +getProduct.getItemName()  + "\nPrice : " + getProduct.getItemPrice() + "\nQuantity : " + getProduct.getItemQuantity();
             mTextView.setText(setTextString);
+        } else {
+            Log.d("in here",mListItems.get(position).toString().replace(Constants.RETAIL_AT_12, "Item Scanned"));
+            mTextView.setText(mListItems.get(position).toString().replace(Constants.RETAIL_AT_12, "Item Scanned"));
         }
 
 
