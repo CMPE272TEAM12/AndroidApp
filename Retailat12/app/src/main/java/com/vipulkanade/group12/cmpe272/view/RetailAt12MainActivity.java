@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -23,8 +22,19 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import de.timroes.android.listview.EnhancedListView;
+
 
 public class RetailAt12MainActivity extends RetailAt12BaseActivity implements View.OnClickListener {
+
+    private enum ControlGroup {
+        SWIPE_TO_DISMISS
+    }
+
+    private static final String PREF_UNDO_STYLE = "de.timroes.android.listviewdemo.UNDO_STYLE";
+    private static final String PREF_SWIPE_TO_DISMISS = "de.timroes.android.listviewdemo.SWIPE_TO_DISMISS";
+    private static final String PREF_SWIPE_DIRECTION = "de.timroes.android.listviewdemo.SWIPE_DIRECTION";
+    private static final String PREF_SWIPE_LAYOUT = "de.timroes.android.listviewdemo.SWIPE_LAYOUT";
 
     // json object response url
     private String urlJsonObj = "http://abe393ba.ngrok.io/getproduct";
@@ -35,9 +45,13 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
 
     private RetailAt12BaseActivity mInstance;
 
+    float historicX = Float.NaN, historicY = Float.NaN;
+    static final int DELTA = 50;
+    enum Direction {LEFT, RIGHT;}
+
     // Progress dialog
     private ProgressDialog pDialog;
-    private ListView addedItemListView;
+    private EnhancedListView addedItemListView;
     private FloatingActionButton scanItemToAddButton;
     private FloatingActionButton checkoutButton;
 
@@ -53,7 +67,7 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
 
         pDialog = new ProgressDialog(this);
 
-        addedItemListView = (ListView) findViewById(R.id.addedItemListView);
+        addedItemListView = (EnhancedListView) findViewById(R.id.addedItemListView);
 
         scanItemToAddButton = (FloatingActionButton) findViewById(R.id.scan_to_add_button);
         checkoutButton = (FloatingActionButton) findViewById(R.id.checkout_button);
@@ -75,6 +89,29 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
 
         addedItemArrayAdapter = new ListAdapter(this, addedItemsList);
         addedItemListView.setAdapter(addedItemArrayAdapter);
+
+        enableControlGroup(ControlGroup.SWIPE_TO_DISMISS, getPreferences(MODE_PRIVATE).getBoolean(PREF_SWIPE_TO_DISMISS, false));
+
+
+        addedItemListView.setDismissCallback(new EnhancedListView.OnDismissCallback() {
+            @Override
+            public EnhancedListView.Undoable onDismiss(EnhancedListView enhancedListView, final int position) {
+
+                //final String item = (String) addedItemArrayAdapter.getItem(position);
+
+                addedItemArrayAdapter.remove(position);
+
+                return new EnhancedListView.Undoable() {
+                    @Override
+                    public void undo() {
+                         //addedItemArrayAdapter.insert(position);
+                    }
+                };
+
+            }
+        });
+
+        addedItemListView.enableSwipeToDismiss();
 
     }
 
@@ -161,6 +198,15 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
                 break;
 
             default:
+                break;
+        }
+    }
+
+    private void enableControlGroup(ControlGroup group, boolean enabled) {
+        switch(group) {
+            case SWIPE_TO_DISMISS:
+                //findViewById(R.id.pref_swipedirection).setEnabled(enabled);
+                //findViewById(R.id.pref_swipelayout).setEnabled(enabled);
                 break;
         }
     }

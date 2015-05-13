@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by vipulkanade on 5/12/15.
  */
-public class ListAdapter extends ArrayAdapter<List<? extends Object>> {
+public class ListAdapter extends ArrayAdapter {
 
     private Context mContext;
     private int iLayoutResId;
@@ -49,4 +49,6 @@ public class ListAdapter extends ArrayAdapter<List<? extends Object>> {
 
         return convertView;
     }
+
+
 }
