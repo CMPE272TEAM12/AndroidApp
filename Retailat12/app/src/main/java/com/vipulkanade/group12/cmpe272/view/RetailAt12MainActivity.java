@@ -137,6 +137,9 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
                     public void onResponse(JSONObject response) {
                         try {
                             VolleyLog.v("Response:%n %s", response.toString(4));
+                            Toast.makeText(getApplicationContext(), "Thank you for Shopping with us", Toast.LENGTH_SHORT).show();
+                            addedItemsList.clear();
+                            addedItemArrayAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -171,10 +174,8 @@ public class RetailAt12MainActivity extends RetailAt12BaseActivity implements Vi
                 break;
 
             case R.id.checkout_button:
-                Log.d("checkout 1 : ", addedItemsList.isEmpty() + "");
-                Log.d("checkout 2 : ", addedItemsList.size() + "");
                 if (!addedItemsList.isEmpty() && addedItemsList != null && addedItemsList.size() != 0) {
-                   // postRequest();
+                    postRequest();
                 } else {
                     Toast.makeText(this, "Please add items to cart first", Toast.LENGTH_SHORT).show();
                 }
