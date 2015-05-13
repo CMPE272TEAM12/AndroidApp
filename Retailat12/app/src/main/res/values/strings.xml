@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Retail at 12</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+    <string name="add_item">Add Item</string>
+    <string name="employee_details">Employee Details</string>
+
+    <string name="drawer_open"></string>
+    <string name="drawer_close"></string>
+
+    <string name="unable_to_execute">Error while executing operation</string>
+    <string name="ok">Ok</string>
+    <string name="unable_to_connect">Oops! Connection is lost. Please try again.</string>
+    <string name="network_unavailable">Please check your network connection and try again.</string>
+    <string name="title_activity_floating_button">FloatingButtonActivity</string>
+</resources>
