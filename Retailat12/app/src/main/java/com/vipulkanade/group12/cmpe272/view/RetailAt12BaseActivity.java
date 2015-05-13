@@ -239,6 +239,14 @@ public class RetailAt12BaseActivity extends ActionBarActivity {
                 }
                 break;
 
+            case 4:		// Product list
+                if (!(mActivity instanceof CheckInOutActivity)) {
+                    Intent oCheckInOutActivity = new Intent(mActivity, CheckInOutActivity.class);
+                    startActivity(oCheckInOutActivity);
+                    finish();
+                }
+                break;
+
             default:
                 break;
         }

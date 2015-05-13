@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vipulkanade.group12.cmpe272.retailat12" >
 
+    <uses-feature android:name="android.hardware.nfc" android:required="true"/>
+    <uses-permission android:name="android.permission.NFC"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -42,6 +44,14 @@
         <activity
             android:name="com.vipulkanade.group12.cmpe272.view.ListProductActivity"
             android:label="@string/title_activity_list_product" >
+        </activity>
+        <activity
+            android:name="com.vipulkanade.group12.cmpe272.view.CheckInOutActivity"
+            android:label="@string/title_activity_check_in_out" >
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
         </activity>
     </application>
 
