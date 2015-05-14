@@ -14,7 +14,7 @@ public class GetProduct {
     private int iItemQuantity;
     private int iStoreID;
     private String sItemCode;
-    private int iItemPrice;
+    private double iItemPrice;
 
     public GetProduct() {
     }
@@ -25,7 +25,7 @@ public class GetProduct {
         iItemQuantity = oJSONObject.optInt(Constants.ITEM_QUANTITY);
         iStoreID = oJSONObject.optInt(Constants.STORE_ID);
         sItemCode = oJSONObject.optString(Constants.ITEM_CODE);
-        iItemPrice = oJSONObject.optInt(Constants.ITEM_PRICE);
+        iItemPrice = oJSONObject.optDouble(Constants.ITEM_PRICE);
     }
 
     public int getItemID() {
@@ -68,11 +68,11 @@ public class GetProduct {
         this.sItemCode = sItemCode;
     }
 
-    public int getItemPrice() {
+    public double getItemPrice() {
         return iItemPrice;
     }
 
-    public void setItemPrice(int iItemPrice) {
+    public void setItemPrice(double iItemPrice) {
         this.iItemPrice = iItemPrice;
     }
 }

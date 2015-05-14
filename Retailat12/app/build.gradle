@@ -59,4 +59,6 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
 
     compile 'info.hoang8f:fbutton:1.0.5'
+
+    compile 'io.card:android-sdk:5.0.0'
 }

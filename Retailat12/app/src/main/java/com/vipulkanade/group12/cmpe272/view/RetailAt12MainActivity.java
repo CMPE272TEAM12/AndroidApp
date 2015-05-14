@@ -112,7 +112,7 @@ public class RetailAt12MainActivity extends ActionBarActivity implements View.On
                     try {
                         jsonObject.put("Item", lines[1].replace("Item Name : ", ""));
                         jsonObject.put("Code", lines[2].replace("Code : ", ""));
-                        jsonObject.put("Price", lines[3].replaceAll("[\\D]", ""));
+                        jsonObject.put("Price", lines[3].replace("Price : $", ""));
                         addedItemsJSONArray.put(jsonObject);
 
                         addedItemsList.add(0, re);
@@ -182,6 +182,8 @@ public class RetailAt12MainActivity extends ActionBarActivity implements View.On
 
             case R.id.checkout_button:
                 if (!addedItemsList.isEmpty() && addedItemsList != null && addedItemsList.size() != 0) {
+                    Intent intent = new Intent(this, PaymentActivity.class);
+                    startActivity(intent);
                     postRequest();
                 } else {
                     Toast.makeText(this, "Please add items to cart first", Toast.LENGTH_SHORT).show();

@@ -114,7 +114,7 @@ public class RetailAt12AddToInventoryActivity extends RetailAt12BaseActivity imp
                 try {
                     jsonObject.put("Item", lines[1].replace("Item Name : ",""));
                     jsonObject.put("Code", lines[2].replace("Code : ", ""));
-                    jsonObject.put("Price", lines[3].replaceAll("[\\D]", ""));
+                    jsonObject.put("Price", lines[3].replace("Price : $", ""));
                     jsonObject.put("Quantity", Integer.parseInt(lines[4].replace("Quantity : ", "")));
                     addedItemsJSONArray.put(jsonObject);
                     Log.d("JSON", addedItemsJSONArray.toString());
