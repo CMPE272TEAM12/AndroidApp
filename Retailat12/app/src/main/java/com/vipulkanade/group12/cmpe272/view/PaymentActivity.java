@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vipulkanade.group12.cmpe272.retailat12.R;
 
@@ -76,6 +77,7 @@ public class PaymentActivity extends RetailAt12BaseActivity implements View.OnCl
         } else {
             resultStr = "Scan was canceled.";
         }
+        Toast.makeText(getApplicationContext(), "Thank you for Shopping with us", Toast.LENGTH_SHORT).show();
         //resultTextView.setText(resultStr);
     }
 

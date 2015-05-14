@@ -49,4 +49,14 @@
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/no_data"
+        android:layout_above="@+id/multiple_actions"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:gravity="center" />
+
 </RelativeLayout>

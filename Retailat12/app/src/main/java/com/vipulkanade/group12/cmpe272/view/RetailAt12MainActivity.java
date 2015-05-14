@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -45,6 +46,8 @@ public class RetailAt12MainActivity extends ActionBarActivity implements View.On
     private FloatingActionButton scanItemToAddButton;
     private FloatingActionButton checkoutButton;
 
+    private TextView mNoDataTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,8 @@ public class RetailAt12MainActivity extends ActionBarActivity implements View.On
 
         pDialog = new ProgressDialog(this);
 
+        mNoDataTextView = (TextView) findViewById(R.id.no_data);
+        mNoDataTextView.setVisibility(View.VISIBLE);
         addedItemListView = (EnhancedListView) findViewById(R.id.addedItemListView);
 
         scanItemToAddButton = (FloatingActionButton) findViewById(R.id.scan_to_add_button);
@@ -116,7 +121,7 @@ public class RetailAt12MainActivity extends ActionBarActivity implements View.On
                         addedItemsJSONArray.put(jsonObject);
 
                         addedItemsList.add(0, re);
-
+                        mNoDataTextView.setVisibility(View.GONE);
                         addedItemArrayAdapter.notifyDataSetChanged();
                         Log.d("JSON", addedItemsJSONArray.toString());
                     } catch (JSONException e) {
@@ -127,7 +132,6 @@ public class RetailAt12MainActivity extends ActionBarActivity implements View.On
 
         }
     }
-
 
     private void postRequest() {
         showpDialog();
@@ -142,7 +146,7 @@ public class RetailAt12MainActivity extends ActionBarActivity implements View.On
                         try {
                             hidepDialog();
                             VolleyLog.v("Response:%n %s", response.toString(4));
-                            Toast.makeText(getApplicationContext(), "Thank you for Shopping with us", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getApplicationContext(), "Thank you for Shopping with us", Toast.LENGTH_SHORT).show();
                             addedItemsList.clear();
                             addedItemArrayAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
@@ -154,7 +158,7 @@ public class RetailAt12MainActivity extends ActionBarActivity implements View.On
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
                 VolleyLog.e("Error: ", error.getMessage());
-                Toast.makeText(getApplicationContext(), "There was error during transaction, Please try again.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "There was error during transaction, Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
 
